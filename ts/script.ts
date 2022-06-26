@@ -40,7 +40,7 @@ let btn2 = document.querySelector("#Ric") as HTMLElement;
     public sec: number = 0;
     public min: number = 0;
     public tempo_chiamata:string 
-    public ciao : boolean = false
+    public stop : boolean = false
     
    
   constructor(_NumChiamate: number, _Saldo: number, ) {
@@ -84,8 +84,8 @@ let btn2 = document.querySelector("#Ric") as HTMLElement;
 
 
   Timer(): any {
-   /*  console.log('Tempo:',this.sec + " " + this.min ); */
-    this.ciao = true
+    console.log('Tempo:'+'Min:' + this.min + " "+ 'Sec:',this.sec);
+    this.stop = true
     if (this.Saldo < 0.20)  {
       this.stopTimer();
       alert("CREDITO ESAURITO, Chiamata Terminata  RICARICA!");
@@ -101,7 +101,7 @@ let btn2 = document.querySelector("#Ric") as HTMLElement;
     }
   }
 stopTimer():void {
-  this.ciao =false
+  this.stop =false
   clearInterval(this.tempochiamata);
   
   
@@ -123,9 +123,12 @@ stopTimer():void {
   }
   //SCALA SALDO
   ScalaSaldo():number {
+    if (this.min >= 1) {
+      
+    
    this.Saldo -= 0.2
     
-   if (this.Saldo <= 0) {
+   }if (this.Saldo <= 0) {
       this.Saldo === 0  
     }
     

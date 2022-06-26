@@ -29,7 +29,7 @@ let btn2 = document.querySelector("#Ric");
         this.tempochiamata = 0;
         this.sec = 0;
         this.min = 0;
-        this.ciao = false;
+        this.stop = false;
         this.NumChiamate = _NumChiamate;
         this.Saldo = _Saldo;
         this.tempo_chiamata = '0 0';
@@ -58,8 +58,8 @@ let btn2 = document.querySelector("#Ric");
         return this.Saldo;
     }
     Timer() {
-        /*  console.log('Tempo:',this.sec + " " + this.min ); */
-        this.ciao = true;
+        console.log('Tempo:' + 'Min:' + this.min + " " + 'Sec:', this.sec);
+        this.stop = true;
         if (this.Saldo < 0.20) {
             this.stopTimer();
             alert("CREDITO ESAURITO, Chiamata Terminata  RICARICA!");
@@ -77,7 +77,7 @@ let btn2 = document.querySelector("#Ric");
         }
     }
     stopTimer() {
-        this.ciao = false;
+        this.stop = false;
         clearInterval(this.tempochiamata);
     }
     startTimer() {
@@ -92,7 +92,9 @@ let btn2 = document.querySelector("#Ric");
     }
     //SCALA SALDO
     ScalaSaldo() {
-        this.Saldo -= 0.2;
+        if (this.min >= 1) {
+            this.Saldo -= 0.2;
+        }
         if (this.Saldo <= 0) {
             this.Saldo === 0;
         }
