@@ -1,30 +1,24 @@
 "use strict";
-addEventListener("DOMContentLoaded", () => {
-    let main = document.querySelector('#main');
-    if (main !== null) { }
-    let p = document.createElement('p');
-    let cc = document.querySelector('#stampa');
-    let stmp = document.createElement('div');
-    stmp.className = 'ciccio';
-    if (stmp !== null && cc !== null) {
-        cc.appendChild(stmp);
-        p.innerHTML = `Saldo:${smrt._Saldo.toFixed(2)}`;
-        /* smrt.get_NumChiamate(); */
-        /* ScalaSaldo(); */
-        /* ricarica(); */
-        /* chiama(); */
+/* addEventListener("DOMContentLoaded",() =>{
+let main = document.querySelector('#main');
+if (main !== null) {}
+let p = document.createElement('p') as HTMLElement
+let cc = document.querySelector('#stampa') as HTMLElement
+let stmp = document.createElement('div') as HTMLDivElement
+stmp.className = 'ciccio'
+if (stmp !== null && cc !== null) {
+  cc.appendChild(stmp);
+
+stmp.innerHTML = `Saldo:${smrt._NumChiamate},${smrt._tempo_chiamata},${smrt._Saldo},`;
+  
+  
     }
-});
-/* let sec: number = 0;
-let min: number = 0;
-let hour: number = 0; */
+}); */
 let btn = document.querySelector("#call");
 let btn2 = document.querySelector("#Ric");
-/* function ScalaSaldo() {
-  smrt.ScalaSaldo()
-    console.log(smrt._Saldo)
-  } */
+//-----------------CLASSE-------------
 /* abstract  */ class SmartPhone {
+    //-----------------CONSTRUCTOR----------
     constructor(_NumChiamate, _Saldo) {
         this.tempochiamata = 0;
         this.sec = 0;
@@ -32,39 +26,49 @@ let btn2 = document.querySelector("#Ric");
         this.stop = false;
         this.NumChiamate = _NumChiamate;
         this.Saldo = _Saldo;
-        this.tempo_chiamata = '0 0';
+        this.tempo_chiamata = "0 0";
     }
-    num_404() {
-        /* console.log(smrt.Saldo.toFixed(2));
-        console.log(obj.Saldo.toFixed(2));
-        console.log(obj1.Saldo.toFixed(2)); */
-        return this.Saldo;
-    }
+    //----------------------GETTER------------------
     get _NumChiamate() {
         return this.NumChiamate;
     }
+    get _Saldo() {
+        return this.Saldo;
+    }
+    get _tempo_chiamata() {
+        return this.sec + " " + this.min;
+    }
+    //------------------METODI------------
+    //--NUMERO 404--
+    num_404() {
+        return this.Saldo;
+    }
+    //---NUMERO CHIAMATE---
     num_chiamate() {
-        /* this.NumChiamate++ */
         if (this.NumChiamate === 5) {
             this.NumChiamate = 0;
-            alert('CHIAMATE AZZERATE');
+            alert("CHIAMATE AZZERATE");
             console.log("Azzerachiamate:", smrt.NumChiamate);
         }
     }
+    //-----RICARICA----
     ricarica3() {
         this.Saldo += +5;
-        console.log('saldo ricaricato:', smrt.Saldo.toFixed(2));
-        alert(' CARICATI 5€');
+        console.log("saldo ricaricato:", smrt.Saldo.toFixed(2));
+        console.log("saldo ricaricato:", obj.Saldo.toFixed(2));
+        console.log("saldo ricaricato:", obj1.Saldo.toFixed(2));
+        alert(" CARICATI 5€");
         return this.Saldo;
     }
+    //------TIMER--------
     Timer() {
-        console.log('Tempo:' + 'Min:' + this.min + " " + 'Sec:', this.sec);
+        console.log("Tempo:" + "Min:" + this.min + " " + "Sec:", this.sec);
         this.stop = true;
-        if (this.Saldo < 0.20) {
+        if (this.Saldo < 0.2) {
             this.stopTimer();
             alert("CREDITO ESAURITO, Chiamata Terminata  RICARICA!");
         }
-        if (this.Saldo >= 0.20) {
+        if (this.Saldo >= 0.2) {
             this.ScalaSaldo();
             this.sec++;
         }
@@ -76,37 +80,35 @@ let btn2 = document.querySelector("#Ric");
             this.min = 0;
         }
     }
+    //-----------STOP TIMER-------
     stopTimer() {
         this.stop = false;
         clearInterval(this.tempochiamata);
     }
+    //-----------START TIMER-------
     startTimer() {
-        if (this.Saldo >= 0.20) {
+        if (this.Saldo >= 0.2) {
             this.NumChiamate++;
             this.tempochiamata = setInterval(() => this.Timer(), 1000);
             /* return this.tempochiamata */
         }
     }
-    get _Saldo() {
-        return this.Saldo;
-    }
-    //SCALA SALDO
+    //-----SCALA SALDO-------
     ScalaSaldo() {
-        if (this.min >= 1) {
+        if (this.sec === 59) {
             this.Saldo -= 0.2;
         }
         if (this.Saldo <= 0) {
             this.Saldo === 0;
         }
-        console.log('Saldo.SMRT:', smrt.Saldo.toFixed(2));
+        console.log("Saldo.SMRT:", smrt.Saldo.toFixed(2));
         console.log("Saldo.OBJ:", obj.Saldo.toFixed(2));
         console.log("Saldo.OBJ1:", obj1.Saldo.toFixed(2));
         return this._Saldo;
     }
-    get _tempo_chiamata() {
-        return this.sec + ' ' + this.min;
-    }
 }
+//----------FINE--CLASSE---------
+//------FUNCTION 404--------
 function num_404() {
     let inp = document.querySelector('#disp');
     inp.value;
@@ -116,11 +118,13 @@ function num_404() {
         }
     }
 }
-//-----------------------SMRT----------------
+//-----------------------SMRT NEW SMARTPHONE----------------
 let smrt = new SmartPhone(0, 0.20);
+//---FUNCTION RICARICA SMRT
 function ricarica() {
     smrt.ricarica3();
 }
+//---FUNCTION CHIAMA SMRT
 function chiama() {
     smrt.num_chiamate();
     smrt.startTimer();
@@ -133,11 +137,13 @@ function chiama() {
     }
     console.log('SMRT:', smrt);
 }
-// --------------------------------------OBJ---------------------
+// -------------------------OBJ NEW SMARTPHONE----------------
 let obj = new SmartPhone(0, 10);
+//---FUNCTION RICARICA OBJ
 function ricarica1() {
-    smrt.ricarica3();
+    obj.ricarica3();
 }
+//---FUNCTION CHIAMA1 OBJ
 function chiama1() {
     obj.num_chiamate();
     obj.startTimer();
@@ -149,12 +155,13 @@ function chiama1() {
     console.log('OBJ:', obj);
 }
 /* console.log(obj._NumChiamate); */
-//--------------------OBJ1------------------------------
+//--------------------OBJ1 NEW SMARTPHONE------------------------------
 let obj1 = new SmartPhone(0, 5);
+//---FUNCTION RICARICA OBJ1
 function ricarica2() {
-    smrt.ricarica3();
-    console.log(obj1.ricarica3());
+    obj1.ricarica3();
 }
+//---FUNCTION CHIAMA2 OBJ1
 function chiama2() {
     obj1.num_chiamate();
     obj1.startTimer();
@@ -167,6 +174,7 @@ function chiama2() {
     }
     console.log('OBJ1:', obj1);
 }
+//---ARRAY OGGETTI SMARTPHONE
 let utenti = ([] = [smrt, obj, obj1]);
 /* console.log(smrt.tempo_chiamata) */
 if (btn !== null) {
